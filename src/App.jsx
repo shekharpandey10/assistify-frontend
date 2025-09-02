@@ -1,13 +1,11 @@
-import React from "react";
-import AppRoutes from "./routes/AppRoutes";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto p-4">
-        <AppRoutes />
-      </div>
+    <div>
+      <AppRoutes />
     </div>
   );
 }

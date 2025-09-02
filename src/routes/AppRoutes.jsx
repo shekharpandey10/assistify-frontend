@@ -1,24 +1,47 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Home from '../pages/Home'
-import Chat from '../pages/Chat'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
-import Faq from '../pages/Faq'
-import Layout from '../components/Layout'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "../components/Layout";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import Dashboard from "../pages/Chat";
+import AdminDashboard from "../pages/Faq";
+import Profile from "../pages/Profile";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-function AppRoutes() {
+const PrivateRoute = ({ children }) => {
+  const { user } = useContext(AuthContext);
+  return user ? children : <Navigate to="/login" />;
+};
+
+const AdminRoute = ({ children }) => {
+  const { user } = useContext(AuthContext);
+  return user?.role === "admin" ? children : <Navigate to="/dashboard" />;
+};
+
+const AppRoutes = () => {
   return (
-     <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/faq" element={<Faq />} />
-        </Routes>
-      </Layout>
-  )
-}
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-export default AppRoutes
+      {/* Protected Routes with Layout */}
+      <Route
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+
+      {/* Redirect unknown paths */}
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  );
+};
+
+export default AppRoutes;
