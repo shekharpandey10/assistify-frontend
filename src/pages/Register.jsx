@@ -1,32 +1,76 @@
-import React from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import Input from '../ui/Input'
+import Button from "../ui/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
+  const [adminSecret, setAdminSecret] = useState("");
+  const { registerUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = { name, email, password, role };
+    if (role === "admin") payload.adminSecret = adminSecret;
+    const success = await registerUser(payload);
+    if (success) navigate("/dashboard");
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg p-8 w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full border rounded-lg px-4 py-2"
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
           />
-          <input
+          <Input
+            label="Email"
             type="email"
-            placeholder="Email"
-            className="w-full border rounded-lg px-4 py-2"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
           />
-          <input
+          <Input
+            label="Password"
             type="password"
-            placeholder="Password"
-            className="w-full border rounded-lg px-4 py-2"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
           />
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-            Register
-          </button>
+          <div className="flex items-center mb-4">
+            <label className="mr-2">Role:</label>
+            <select
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          {role === "admin" && (
+            <Input
+              label="Admin Secret"
+              type="password"
+              value={adminSecret}
+              onChange={(e) => setAdminSecret(e.target.value)}
+              placeholder="Enter admin secret"
+            />
+          )}
+          <Button type="submit" className="w-full mt-4">Register</Button>
         </form>
-        <p className="text-sm text-gray-600 mt-4 text-center">
-          Already have an account? <a href="/login" className="text-blue-600">Login</a>
+        <p className="text-sm text-gray-500 mt-4 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-green-500 font-medium">Login</Link>
         </p>
       </div>
     </div>

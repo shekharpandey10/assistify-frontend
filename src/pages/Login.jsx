@@ -1,27 +1,45 @@
-import React from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import Input from '../ui/Input'
+import Button from "../ui/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { loginUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const success = await loginUser({ email, password });
+    if (success) navigate("/dashboard");
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg p-8 w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-        <form className="space-y-4">
-          <input
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="Email"
             type="email"
-            placeholder="Email"
-            className="w-full border rounded-lg px-4 py-2"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
           />
-          <input
+          <Input
+            label="Password"
             type="password"
-            placeholder="Password"
-            className="w-full border rounded-lg px-4 py-2"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
           />
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-            Login
-          </button>
+          <Button type="submit" className="w-full mt-4">Login</Button>
         </form>
-        <p className="text-sm text-gray-600 mt-4 text-center">
-          Don’t have an account? <a href="/register" className="text-blue-600">Register</a>
+        <p className="text-sm text-gray-500 mt-4 text-center">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-green-500 font-medium">Register</Link>
         </p>
       </div>
     </div>
