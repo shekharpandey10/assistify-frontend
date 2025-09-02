@@ -25,12 +25,17 @@ export const sendMessage = (userMessage, history = []) =>
   API.post("/chat/", { userMessage, history });
 
 export const getChatHistory = () => API.get("/chat/history");
-
+export const getProfile = () => API.get("/auth/profile");
 
 // FAQ/Admin API
 
-export const getContexts = () => API.get("/faq");
-export const uploadContext = (formData) => API.post("/faq", formData);
+// Fetch all contexts
+export const fetchContexts = () => API.get("/faqs");
+export const fetchContextById = (id) => API.get(`/faqs/${id}`);
+export const createContext = (formData) =>
+  API.post("/faqs", formData, { headers: { "Content-Type": "multipart/form-data" } });
+export const updateContext = (id, data) => API.put(`/faqs/${id}`, data);
+export const deleteContext = (id) => API.delete(`/faqs/${id}`);
 
 
 export default API;
