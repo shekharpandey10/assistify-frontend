@@ -2,9 +2,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://assistify-backend-n646.onrender.com/api" || "http://localhost:3000/api",
+  baseURL: process.env.REACT_APP_API_URL,
 });
-
 // Attach token automatically
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
