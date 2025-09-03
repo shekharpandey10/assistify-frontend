@@ -12,10 +12,14 @@ export default function AdminUploadContext() {
     const formData = new FormData();
     formData.append("title", title);
     if (content) formData.append("content", content);
+    console.log('before file')
     if (file) formData.append("file", file);
+    console.log('after file')
 
     try {
       await createContext(formData);
+          console.log('late after file')
+
       alert("Context uploaded successfully!");
       setTitle("");
       setContent("");

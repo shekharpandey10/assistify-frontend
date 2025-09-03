@@ -52,12 +52,12 @@ const Register = () => {
           <div className="flex items-center mb-4">
             <label className="mr-2">Role:</label>
             <select
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer "
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="user" className="cursor-pointer">User</option>
+              <option value="admin" className="cursor-pointer">Admin</option>
             </select>
           </div>
           {role === "admin" && (

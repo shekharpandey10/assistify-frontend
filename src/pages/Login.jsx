@@ -92,27 +92,27 @@ const Login = () => {
           />
         </div>
 
-        <div className="mb-6">
-          <label className="block mb-1 font-semibold">Login as</label>
+        <div className="mb-6 ">
+          <label className="block mb-1 font-semibold ">Login as</label>
           <select
             name="role"
             value={form.role}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border px-3 py-2 rounded cursor-pointer"
           >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+            <option value="user" className="cursor-pointer">User</option>
+            <option value="admin " className="cursor-pointer" >Admin</option>
           </select>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          className="w-full bg-green-600 text-white py-2 rounded cursor-pointer hover:bg-green-700"
         >
           Login
         </button>
       </form>
-       <p className="text-sm text-gray-500 mt-4 text-center">
+       <p className="text-sm text-gray-500 mt-4 text-center ">
           New User?{" "}
           <Link to="/register" className="text-green-500 font-medium">Create new Account</Link>
         </p>

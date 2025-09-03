@@ -24,7 +24,8 @@ export const registerUser = (payload) => API.post("/auth/register", payload);
 export const sendMessage = (userMessage, history = []) =>
   API.post("/chat/", { userMessage, history });
 
-export const getChatHistory = () => API.get("/chat/history");
+export const getChatHistory = (page = 1, limit = 5) =>
+  API.get(`/chat/history?page=${page}&limit=${limit}`);
 export const getProfile = () => API.get("/auth/profile");
 
 // FAQ/Admin API
@@ -33,7 +34,7 @@ export const getProfile = () => API.get("/auth/profile");
 export const fetchContexts = () => API.get("/faqs");
 export const fetchContextById = (id) => API.get(`/faqs/${id}`);
 export const createContext = (formData) =>
-  API.post("/faqs", formData, { headers: { "Content-Type": "multipart/form-data" } });
+  API.post("/faqs", formData);
 export const updateContext = (id, data) => API.put(`/faqs/${id}`, data);
 export const deleteContext = (id) => API.delete(`/faqs/${id}`);
 
