@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://assistify-backend-n646.onrender.com/" || "http://localhost:3000/api",
+  baseURL: "http://assistify-backend-n646.onrender.com/api" || "http://localhost:3000/api",
 });
 
 // Attach token automatically
